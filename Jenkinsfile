@@ -16,7 +16,7 @@ pipeline {
         stage('sonal analysis') {
             steps {  
                 withSonarQubeEnv('sonar') {
-                    sh 'mvn clean package sonar:sonar -Dsonar.organization=ramyagaraga -Dsonar.ProjectKey=ramyagaraga_spc'
+                    sh 'mvn clean package sonar:sonar -Dsonar.organization=ramyagaraga -Dsonar.projectKey=ramyagaraga_spc'
                 } 
             }
         } 
