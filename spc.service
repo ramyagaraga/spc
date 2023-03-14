@@ -2,7 +2,7 @@
 Description=spc 
 
 [Service]
-ExecStart=/usr/lib/jvm/java-1.17.0-openjdk-amd64/bin/java -jar **/target/spring-petclinic-3.0.0-SNAPSHOT.jar
+ExecStart=/usr/lib/jvm/java-1.17.0-openjdk-amd64/bin/java -jar /home/ubuntu/jenkins/workspace/spc_multibranch_release/target/spring-petclinic-3.0.0-SNAPSHOT.jar
 
 [Install]
 WantedBy=multi-user.target
