@@ -34,8 +34,8 @@ pipeline {
         }
         stage('deployement') {
             steps { 
-                sh 'sudo systemctl daemon-reload',
-                sh 'sudo systemctl enable spc.service', 
+                sh 'sudo systemctl daemon-reload'
+                sh 'sudo systemctl enable spc.service'
                 sh 'sudo systemctl restart spc.service'
             }
         }
