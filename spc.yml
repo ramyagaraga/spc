@@ -5,7 +5,7 @@
   tasks: 
     - name: copy the spc jar file 
       ansible.builtin.copy: 
-        src: /home/ubuntu/jenkins/workspace/spc_multibranch_release/target/spring-petclinic-3.0.0-SNAPSHOT.jar 
+        src: /home/jenkins/root/workspace/spc_multibranch_release/target/spring-petclinic-3.0.0-SNAPSHOT.jar 
         remote_src: true
         dest: /tmp/ 
     - name: copy the unit service file
