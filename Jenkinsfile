@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'node1'} 
+    agent { label 'buildnode'} 
     stages {
         stage('vcs') { 
             steps {
@@ -10,7 +10,7 @@ pipeline {
         }
         stage('Build') { 
             steps {
-                sh './mvnw package'
+                sh 'mvn package'
             } 
         } 
         stage('sonal analysis') {
