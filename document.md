@@ -8,10 +8,11 @@
  * java -jar target/*.jar 
   
 ## freestyle method :
-  * take spc github project and fork the repository create feature branch in your repository 
+  * Take spc github project and fork the repository create feature branch in your repository 
   * write a jenkins pipeline for spring petclinic project in feature branch 
-  * if any changes are done then send a pull request to main branch then admin of that repository can accept your request instead of merging they check and run your pipeline after that only they merge 
-  ```pipeline {
+  * If any changes are done then send a pull request to main branch then admin of that repository can accept your request instead of merging they check and run your pipeline after that only they merge 
+  ```
+  pipeline {
     agent { label 'buildnode'} 
     stages {
         stage('vcs') { 
@@ -37,30 +38,35 @@
 }
 
 ```
-* send pull request to main repository 
+* Send pull request to targetted repository 
 ![preview](images/spc1.png)
-* take master vm and install java , maven & jenkins
-* for jenkins installtion  [refer here ](https://www.jenkins.io/doc/book/installing/linux/)
+* Take master vm and install java , maven & jenkins
+* For jenkins installtion  [refer here ](https://www.jenkins.io/doc/book/installing/linux/)
 * ` sudo cat`
-* after login into jenkins create a freestyle project 
+* After login into jenkins create a freestyle project 
 ![ preview ](images/spc2.png)
-* click on Manage jenkins  &rarr;  Manage Credentials and give credentials for node
-* give a connection between github and jenkins through credentials with github token
+* Click on Manage jenkins  &rarr;  Manage Credentials and give credentials for node
+* Give a connection between github and jenkins through credentials with github token
 for that generate a token in github
-*  go to settings in github &rarr; developer settings &rarr; personal access token  &rarr; `generate token` 
-* by using this token add credetials in jenkins 
-* now configure the project by givinig required details 
-  * create a pull request in git hub 
-  * ensure once it automatically trigger in jenkins (it will not trigger)
-  * goto manage jenkins &rarr; manage pluggins &rarr; install GitHub Pull Request Builder 
-  * follow this documetation for git pull request in jenkins [referhere](https://plugins.jenkins.io/ghprb/) [referhere](https://devopscube.com/jenkins-build-trigger-github-pull-request/)
+* Go to settings in github &rarr; developer settings &rarr; personal access token  &rarr; `generate token` 
+![preview](images/spc8.png)
+* By using this token add credetials in jenkins 
+* Now configure the project by givinig required details 
+* create a pull request in git hub 
+* ensure once it automatically trigger in jenkins (it will not trigger)
+* goto manage jenkins &rarr; manage pluggins &rarr; install GitHub Pull Request Builder 
+* follow this documetation for git pull request in jenkins [referhere](https://plugins.jenkins.io/ghprb/) [referhere](https://devopscube.com/jenkins-build-trigger-github-pull-request/)
 ## webhooks : 
 * Webhooks allow external services to be notified when certain events happen 
-* it is used to trigger the github events in jenkins for that go to settings in git hub repository click on webhooks `add webhook` give jenkins url and select git hub pull_request 
-* send a pull request in github it will automatically trigger in jenkins 
-* if it is success then merge the request 
+* It is used to trigger the github events in jenkins for that go to settings in git hub repository click on webhooks `add webhook` give jenkins url and select git hub pull_request 
+![preview](images/spc6.png)
+![preview](images/spc7.png)
+* Send a pull request in github it will automatically trigger in jenkins 
+* If it is success then Merge the request 
 
 ## Multibranch Pipeline : 
+  * Create Multibranch pipeline in jenkins 
+  ![preview](images/spc3.png) 
   * In multi branch pipeline all branches in your repository will run automatically 
   * Create two branches develop and release 
   * In develop branch write a declarative pipeline for build the project 
@@ -146,8 +152,8 @@ for that generate a token in github
     }
 }
   ```
-  * now here we have do build in one node and deployment in another vm for that we use `stash & unstash`  
-    * stash is copying the files  
+  * now here we have do build in one node and deployment in another node for that we use `stash & unstash`  
+    * stash is copying the files & unstash is print the copied file [refer here](https://www.jenkins.io/doc/pipeline/steps/workflow-basic-steps/#stash-stash-some-files-to-be-used-later-in-the-build) 
   * for deployment purpose write a service file to project 
 ```
   [Unit]
@@ -197,3 +203,6 @@ WantedBy=multi-user.target
 * now node private ip added in inventory file `vi hosts` 
 * these all playbook and hosts file service file all are kept in release branch 
 * run the multibranch pipeline then get the output
+![preview](images/spc4.png)
+![preview](images/spc5.png)
+* Browse the deployment node <publicip>:8080 
