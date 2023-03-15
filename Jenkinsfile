@@ -30,8 +30,8 @@ pipeline {
                 archiveArtifacts artifacts: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar',
                                  onlyIfSuccessful: true 
                 junit testResults: '**/surefire-reports/TEST-*.xml' 
-                stash name: 'jarfile'
-                      includes: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar'
+                stash includes: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar', name: 'jarfile'
+                      
             }
         }
         stage('get jarfile') {
