@@ -1,6 +1,6 @@
 pipeline {
-    agent { label 'node1'} 
-    triggers { pollSCM ('* * * * *') } 
+    agent { label 'buildnode'} 
+    triggers { pollSCM ('* 23 * * *') } 
     parameters {
         choice(name: 'MAVEN_GOAL', choices: ['package', 'install', 'clean'], description: 'Maven Goal')
     }
@@ -29,10 +29,19 @@ pipeline {
             steps {
                 archiveArtifacts artifacts: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar',
                                  onlyIfSuccessful: true 
-                junit testResults: '**/surefire-reports/TEST-*.xml'
+                junit testResults: '**/surefire-reports/TEST-*.xml' 
+                stash name: 'jarfile'
+                      includes: '**/target/spring-petclinic-3.0.0-SNAPSHOT.jar'
             }
         }
-        stage('deployement') {
+        stage('get jarfile') {
+            agent { label 'deploymentnode'}
+            steps {
+                unstash name: 'jarfile'
+            }
+        }
+        stage('deployement') { 
+            agent { label 'deploymentnode' }
             steps { 
                sh 'ansible-playbook -i hosts spc.yml'
             }
